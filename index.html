@@ -7,81 +7,75 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif}
 body{background:#fff;color:#1e293b;overflow-x:hidden}
-header{background:#fff;padding:20px 5%;border-bottom:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center}
+header{background:#fff;padding:18px 5%;border-bottom:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center}
 .brand{font-size:26px;font-weight:800;color:#0f172a;letter-spacing:-0.5px}
 .brand span{color:#059669}
 .status-badge{background:#d1fae5;color:#065f46;padding:6px 14px;border-radius:50px;font-size:13px;font-weight:600}
-.hero{text-align:center;padding:40px 20px 15px;background:linear-gradient(180deg,#ecfdf5 0%,#fff 100%)}
-.hero h1{font-size:38px;color:#0f172a;margin-bottom:10px;font-weight:800}
-.hero h1 span{color:#059669}
-.hero p{font-size:16px;color:#475569;max-width:640px;margin:0 auto;line-height:1.6}
-.hint-text{display:inline-block;margin-top:12px;font-size:13px;color:#059669;background:#ecfdf5;padding:6px 16px;border-radius:50px;font-weight:600;border:1px solid #a7f3d0}
-.orbit-wrapper{max-width:1150px;margin:5px auto 70px;padding:0 20px;position:relative}
-.orbit-stage{position:relative;width:100%;height:520px;display:flex;justify-content:center;align-items:center;perspective:1200px;touch-action:pan-y}
-.orbit-item{position:absolute;transition:all .75s cubic-bezier(.25,1,.5,1);overflow:hidden;box-shadow:0 18px 36px rgba(15,23,42,.16);cursor:pointer;background:#d1fae5;user-select:none}
-.orbit-item img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
-.orbit-item.pos-0{width:500px;height:325px;border-radius:26px;border:5px solid #fff;transform:translate3d(0,0,120px) rotate(0deg);z-index:30;opacity:1;cursor:default}
-.orbit-item.pos-1{width:98px;height:98px;border-radius:50%;border:3px solid #fff;transform:translate3d(340px,-110px,20px) rotate(12deg);z-index:22;opacity:.95}
-.orbit-item.pos-2{width:112px;height:112px;border-radius:50%;border:4px solid #fff;transform:translate3d(370px,20px,30px) rotate(22deg);z-index:24;opacity:.98}
-.orbit-item.pos-3{width:95px;height:95px;border-radius:50%;border:3px solid #fff;transform:translate3d(295px,155px,15px) rotate(32deg);z-index:21;opacity:.92}
-.orbit-item.pos-4{width:85px;height:85px;border-radius:50%;border:3px solid #fff;transform:translate3d(150px,215px,5px) rotate(42deg);z-index:19;opacity:.88}
-.orbit-item.pos-5{width:82px;height:82px;border-radius:50%;border:3px solid #fff;transform:translate3d(0,225px,0) rotate(0deg);z-index:18;opacity:.85}
-.orbit-item.pos-6{width:85px;height:85px;border-radius:50%;border:3px solid #fff;transform:translate3d(-150px,215px,5px) rotate(-42deg);z-index:19;opacity:.88}
-.orbit-item.pos-7{width:95px;height:95px;border-radius:50%;border:3px solid #fff;transform:translate3d(-295px,155px,15px) rotate(-32deg);z-index:21;opacity:.92}
-.orbit-item.pos-8{width:112px;height:112px;border-radius:50%;border:4px solid #fff;transform:translate3d(-370px,20px,30px) rotate(-22deg);z-index:24;opacity:.98}
-.orbit-item.pos-9{width:98px;height:98px;border-radius:50%;border:3px solid #fff;transform:translate3d(-340px,-110px,20px) rotate(-12deg);z-index:22;opacity:.95}
-.orbit-item.pos-10{width:85px;height:85px;border-radius:50%;border:3px solid #fff;transform:translate3d(0,-215px,-30px) rotate(180deg);z-index:16;opacity:.82}
-.orbit-item:not(.pos-0):hover{border-color:#059669;opacity:1;box-shadow:0 12px 28px rgba(5,150,105,.35)}
-.orbit-caption{position:absolute;bottom:0;left:0;right:0;padding:25px 24px 18px;background:linear-gradient(to top,rgba(15,23,42,.85),transparent);color:#fff;opacity:0;transition:opacity .4s ease}
-.orbit-item.pos-0 .orbit-caption{opacity:1}
-.orbit-caption span{display:inline-block;background:#059669;font-size:11px;font-weight:700;padding:3px 10px;border-radius:50px;margin-bottom:6px;text-transform:uppercase}
-.orbit-caption h3{font-size:21px;font-weight:700}
-.description-panel{max-width:720px;margin:15px auto 25px;background:#f8fafc;border:1px solid #e2e8f0;border-left:5px solid #059669;border-radius:18px;padding:24px 28px;box-shadow:0 10px 25px rgba(15,23,42,.05);transition:opacity .3s ease}
-.desc-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:10px}
-.desc-header h2{font-size:22px;color:#0f172a;font-weight:800}
-.desc-location{background:#d1fae5;color:#065f46;font-size:12.5px;font-weight:700;padding:4px 12px;border-radius:50px}
-.desc-text{font-size:15px;color:#475569;line-height:1.65;margin-bottom:14px}
-.desc-highlights{display:flex;flex-wrap:wrap;gap:8px}
-.highlight-tag{background:#fff;border:1px solid #cbd5e1;color:#334155;font-size:12.5px;font-weight:600;padding:5px 12px;border-radius:8px}
-.orbit-controls{display:flex;justify-content:center;align-items:center;gap:16px}
-.nav-btn{background:#ecfdf5;color:#059669;border:1px solid #a7f3d0;width:42px;height:42px;border-radius:50%;font-size:18px;font-weight:700;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center}
-.nav-btn:hover{background:#059669;color:#fff}
-.dots{display:flex;gap:7px;flex-wrap:wrap;justify-content:center}
-.dot{width:9px;height:9px;border-radius:50%;background:#cbd5e1;cursor:pointer;transition:all .3s}
-.dot.active{width:26px;border-radius:10px;background:#059669}
-footer{background:#0f172a;color:#94a3b8;text-align:center;padding:30px 20px;font-size:14px}
+.showcase-layout{display:grid;grid-template-columns:1.15fr 0.85fr;align-items:center;min-height:600px;background:linear-gradient(135deg,#ecfdf5 0%,#ffffff 65%);padding:30px 5% 40px 0;gap:30px}
+.arc-container{position:relative;width:100%;height:560px;display:flex;align-items:center;touch-action:pan-y}
+.arc-item{position:absolute;transition:all .7s cubic-bezier(.22,1,.36,1);overflow:hidden;cursor:pointer;background:#d1fae5;user-select:none}
+.arc-item img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;transition:transform .6s ease}
+.arc-item.pos-0{left:0;top:50%;width:510px;height:520px;border-radius:0 260px 260px 0;border:6px solid #059669;border-left:none;box-shadow:18px 18px 45px rgba(5,150,105,.25);transform:translate3d(0,-50%,0) scale(1);z-index:30;opacity:1;cursor:default}
+.arc-item.pos-0 img{transform:scale(1.03)}
+.arc-item.pos-1{left:400px;top:38px;width:96px;height:96px;border-radius:50%;border:4px solid #fff;box-shadow:0 10px 24px rgba(15,23,42,.18);z-index:25;opacity:.92}
+.arc-item.pos-2{left:485px;top:148px;width:108px;height:108px;border-radius:50%;border:4px solid #fff;box-shadow:0 12px 26px rgba(15,23,42,.2);z-index:26;opacity:.96}
+.arc-item.pos-3{left:495px;top:285px;width:108px;height:108px;border-radius:50%;border:4px solid #fff;box-shadow:0 12px 26px rgba(15,23,42,.2);z-index:26;opacity:.96}
+.arc-item.pos-4{left:420px;top:412px;width:96px;height:96px;border-radius:50%;border:4px solid #fff;box-shadow:0 10px 24px rgba(15,23,42,.18);z-index:25;opacity:.92}
+.arc-item.pos-5{left:295px;top:480px;width:78px;height:78px;border-radius:50%;border:3px solid #fff;box-shadow:0 8px 18px rgba(15,23,42,.15);z-index:22;opacity:.8}
+.arc-item.pos-6{left:170px;top:495px;width:68px;height:68px;border-radius:50%;border:3px solid #fff;z-index:18;opacity:.65}
+.arc-item.pos-7{left:60px;top:480px;width:60px;height:60px;border-radius:50%;border:3px solid #fff;z-index:15;opacity:.45}
+.arc-item.pos-8{left:60px;top:10px;width:60px;height:60px;border-radius:50%;border:3px solid #fff;z-index:15;opacity:.45}
+.arc-item.pos-9{left:170px;top:-10px;width:68px;height:68px;border-radius:50%;border:3px solid #fff;z-index:18;opacity:.65}
+.arc-item.pos-10{left:285px;top:0px;width:78px;height:78px;border-radius:50%;border:3px solid #fff;box-shadow:0 8px 18px rgba(15,23,42,.15);z-index:22;opacity:.8}
+.arc-item:not(.pos-0):hover{transform:scale(1.12);border-color:#059669;opacity:1;z-index:29}
+.arc-badge{position:absolute;bottom:36px;left:28px;background:rgba(15,23,42,.82);backdrop-filter:blur(6px);color:#fff;padding:12px 20px;border-radius:16px;border-left:4px solid #10b981;max-width:340px;opacity:0;transition:opacity .4s ease}
+.arc-item.pos-0 .arc-badge{opacity:1}
+.arc-badge small{color:#6ee7b7;font-weight:700;font-size:11px;text-transform:uppercase;display:block;margin-bottom:2px}
+.arc-badge strong{font-size:17px;display:block}
+.info-column{padding-left:30px;max-width:520px}
+.welcome-tag{display:inline-block;background:#d1fae5;color:#065f46;font-size:12px;font-weight:700;padding:5px 14px;border-radius:50px;margin-bottom:14px}
+.info-column h1{font-size:36px;color:#0f172a;font-weight:800;line-height:1.2;margin-bottom:10px}
+.info-column h1 span{color:#059669}
+.sub-intro{font-size:15px;color:#64748b;margin-bottom:24px;line-height:1.5}
+.desc-card{background:#fff;border:1px solid #e2e8f0;border-left:5px solid #059669;border-radius:20px;padding:24px;box-shadow:0 12px 30px rgba(15,23,42,.06);transition:opacity .25s ease;margin-bottom:22px}
+.desc-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.desc-top h2{font-size:21px;color:#0f172a;font-weight:800}
+.loc-pill{background:#ecfdf5;color:#059669;font-size:12px;font-weight:700;padding:4px 12px;border-radius:50px;border:1px solid #a7f3d0}
+.desc-body{font-size:14.5px;color:#475569;line-height:1.65;margin-bottom:14px}
+.tags-wrap{display:flex;flex-wrap:wrap;gap:8px}
+.tag-item{background:#f8fafc;border:1px solid #cbd5e1;color:#334155;font-size:12px;font-weight:600;padding:5px 11px;border-radius:8px}
+.controls-bar{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.ctrl-btn{background:#059669;color:#fff;border:none;width:44px;height:44px;border-radius:50%;font-size:18px;font-weight:700;cursor:pointer;transition:background .2s,transform .15s;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 15px rgba(5,150,105,.25)}
+.ctrl-btn:hover{background:#047857;transform:scale(1.06)}
+.dots-list{display:flex;gap:6px;flex-wrap:wrap}
+.dot-btn{width:9px;height:9px;border-radius:50%;background:#cbd5e1;cursor:pointer;transition:all .3s}
+.dot-btn.active{width:24px;border-radius:10px;background:#059669}
+footer{background:#0f172a;color:#94a3b8;text-align:center;padding:26px 20px;font-size:14px}
 footer strong{color:#fff}
-@media(max-width:920px){
-.orbit-stage{height:460px}
-.orbit-item.pos-0{width:76%;max-width:400px;height:255px}
-.orbit-item.pos-1{width:68px;height:68px;transform:translate3d(195px,-85px,10px)}
-.orbit-item.pos-2{width:74px;height:74px;transform:translate3d(215px,15px,20px)}
-.orbit-item.pos-3{width:66px;height:66px;transform:translate3d(175px,120px,10px)}
-.orbit-item.pos-4{width:60px;height:60px;transform:translate3d(95px,175px,5px)}
-.orbit-item.pos-5{width:58px;height:58px;transform:translate3d(0,185px,0)}
-.orbit-item.pos-6{width:60px;height:60px;transform:translate3d(-95px,175px,5px)}
-.orbit-item.pos-7{width:66px;height:66px;transform:translate3d(-175px,120px,10px)}
-.orbit-item.pos-8{width:74px;height:74px;transform:translate3d(-215px,15px,20px)}
-.orbit-item.pos-9{width:68px;height:68px;transform:translate3d(-195px,-85px,10px)}
-.orbit-item.pos-10{width:60px;height:60px;transform:translate3d(0,-170px,-25px)}
+@media(max-width:1050px){
+.showcase-layout{grid-template-columns:1fr;padding:20px 0 40px}
+.arc-container{height:440px;max-width:650px}
+.arc-item.pos-0{width:360px;height:380px;border-radius:0 190px 190px 0}
+.arc-item.pos-1{left:285px;top:25px;width:74px;height:74px}
+.arc-item.pos-2{left:345px;top:115px;width:82px;height:82px}
+.arc-item.pos-3{left:348px;top:225px;width:82px;height:82px}
+.arc-item.pos-4{left:290px;top:325px;width:74px;height:74px}
+.arc-item.pos-5{left:200px;top:375px;width:62px;height:62px}
+.arc-item.pos-6,.arc-item.pos-7,.arc-item.pos-8,.arc-item.pos-9{opacity:0;pointer-events:none}
+.arc-item.pos-10{left:200px;top:0px;width:62px;height:62px}
+.info-column{padding:0 5%;max-width:100%}
 }
-@media(max-width:540px){
-.hero h1{font-size:28px}
-.orbit-stage{height:410px}
-.orbit-item.pos-0{width:86%;height:205px}
-.orbit-item.pos-1{width:50px;height:50px;transform:translate3d(130px,-75px,10px)}
-.orbit-item.pos-2{width:54px;height:54px;transform:translate3d(142px,10px,20px)}
-.orbit-item.pos-3{width:48px;height:48px;transform:translate3d(118px,100px,10px)}
-.orbit-item.pos-4{width:44px;height:44px;transform:translate3d(62px,145px,5px)}
-.orbit-item.pos-5{width:44px;height:44px;transform:translate3d(0,155px,0)}
-.orbit-item.pos-6{width:44px;height:44px;transform:translate3d(-62px,145px,5px)}
-.orbit-item.pos-7{width:48px;height:48px;transform:translate3d(-118px,100px,10px)}
-.orbit-item.pos-8{width:54px;height:54px;transform:translate3d(-142px,10px,20px)}
-.orbit-item.pos-9{width:50px;height:50px;transform:translate3d(-130px,-75px,10px)}
-.orbit-item.pos-10{width:44px;height:44px;transform:translate3d(0,-142px,-25px)}
-.orbit-caption h3{font-size:17px}
-.description-panel{padding:18px 20px}
-.desc-header h2{font-size:19px}
+@media(max-width:520px){
+.arc-container{height:350px}
+.arc-item.pos-0{width:265px;height:290px;border-radius:0 145px 145px 0}
+.arc-item.pos-1{left:215px;top:20px;width:58px;height:58px}
+.arc-item.pos-2{left:255px;top:92px;width:64px;height:64px}
+.arc-item.pos-3{left:255px;top:180px;width:64px;height:64px}
+.arc-item.pos-4{left:212px;top:255px;width:58px;height:58px}
+.arc-item.pos-5,.arc-item.pos-10{opacity:0;pointer-events:none}
+.arc-badge{left:14px;bottom:22px;padding:8px 12px;max-width:210px}
+.arc-badge strong{font-size:14px}
+.info-column h1{font-size:28px}
 }
 </style>
 </head>
@@ -90,36 +84,93 @@ footer strong{color:#fff}
 <div class="brand">Gita<span>Vacation</span></div>
 <div class="status-badge">Official Website</div>
 </header>
-<section class="hero">
-<h1>Selamat Datang di <span>Gita Vacation</span></h1>
-<p>Temukan inspirasi perjalanan dan nikmati keindahan pesona alam bersama layanan wisata terpercaya untuk liburan impian Anda.</p>
-<div class="hint-text">Klik lingkaran di sekeliling gambar atau geser untuk memutar destinasi</div>
-</section>
-<section class="orbit-wrapper">
-<div class="orbit-stage" id="orbitStage">
-<div class="orbit-item pos-0" onclick="rotateTo(0)"><img src="Mountain Prau.jpg" alt="Gunung Prau"><div class="orbit-caption"><span>Dieng Plateau</span><h3>Eksplorasi Gunung Prau</h3></div></div>
-<div class="orbit-item pos-1" onclick="rotateTo(1)"><img src="sunrise-lava-tour-merapi.jpg" alt="Merapi"><div class="orbit-caption"><span>Yogyakarta</span><h3>Sunrise Lava Tour Merapi</h3></div></div>
-<div class="orbit-item pos-2" onclick="rotateTo(2)"><img src="Obelix-Sea-View-Gunung-Kidul.png" alt="Obelix"><div class="orbit-caption"><span>Gunung Kidul</span><h3>Obelix Sea View Jogja</h3></div></div>
-<div class="orbit-item pos-3" onclick="rotateTo(3)"><img src="grafika-cikole-lembang.jpg" alt="Grafika Cikole"><div class="orbit-caption"><span>Lembang, Bandung</span><h3>Grafika Cikole Lembang</h3></div></div>
-<div class="orbit-item pos-4" onclick="rotateTo(4)"><img src="Dieng _ Mountain Sunrise.jpg" alt="Dieng"><div class="orbit-caption"><span>Wonosobo &amp; Banjarnegara</span><h3>Golden Sunrise Dieng</h3></div></div>
-<div class="orbit-item pos-5" onclick="rotateTo(5)"><img src="Heha sky.jpg" alt="HeHa Sky"><div class="orbit-caption"><span>Patuk, Gunung Kidul</span><h3>HeHa Sky View Yogyakarta</h3></div></div>
-<div class="orbit-item pos-6" onclick="rotateTo(6)"><img src="Mont Bromo Indonésie _ Volcan Java lever soleil.jpg" alt="Bromo"><div class="orbit-caption"><span>Jawa Timur</span><h3>Eksotisme Gunung Bromo</h3></div></div>
-<div class="orbit-item pos-7" onclick="rotateTo(7)"><img src="PENGINAPAN2 DAMAE CIKOLE.jpg" alt="Damae Cikole"><div class="orbit-caption"><span>Cikole, Lembang</span><h3>Penginapan Alam Damae Cikole</h3></div></div>
-<div class="orbit-item pos-8" onclick="rotateTo(8)"><img src="fun ofroad1.jpg" alt="Offroad"><div class="orbit-caption"><span>Wisata Petualangan</span><h3>Fun Offroad Land Rover</h3></div></div>
-<div class="orbit-item pos-9" onclick="rotateTo(9)"><img src="fun game lembang.webp" alt="Fun Game"><div class="orbit-caption"><span>Outbound &amp; Gathering</span><h3>Fun Game &amp; Team Building</h3></div></div>
-<div class="orbit-item pos-10" onclick="rotateTo(10)"><img src="sewa-mobil-jogja-paket.jpg" alt="Sewa Mobil"><div class="orbit-caption"><span>Layanan Transportasi</span><h3>Paket Sewa Mobil &amp; Driver</h3></div></div>
+<main class="showcase-layout">
+<div class="arc-container" id="arcStage">
+<div class="arc-item pos-0" data-idx="0"><img src="Mountain Prau.jpg" alt="Gunung Prau"><div class="arc-badge"><small>Dieng Plateau</small><strong>Eksplorasi Gunung Prau</strong></div></div>
+<div class="arc-item pos-1" data-idx="1"><img src="sunrise-lava-tour-merapi.jpg" alt="Merapi"><div class="arc-badge"><small>Yogyakarta</small><strong>Sunrise Lava Tour Merapi</strong></div></div>
+<div class="arc-item pos-2" data-idx="2"><img src="Obelix-Sea-View-Gunung-Kidul.png" alt="Obelix"><div class="arc-badge"><small>Gunung Kidul</small><strong>Obelix Sea View Jogja</strong></div></div>
+<div class="arc-item pos-3" data-idx="3"><img src="grafika-cikole-lembang.jpg" alt="Grafika Cikole"><div class="arc-badge"><small>Lembang, Bandung</small><strong>Grafika Cikole Lembang</strong></div></div>
+<div class="arc-item pos-4" data-idx="4"><img src="Dieng _ Mountain Sunrise.jpg" alt="Dieng"><div class="arc-badge"><small>Wonosobo</small><strong>Golden Sunrise Dieng</strong></div></div>
+<div class="arc-item pos-5" data-idx="5"><img src="Heha sky.jpg" alt="HeHa Sky"><div class="arc-badge"><small>Patuk, Jogja</small><strong>HeHa Sky View Yogyakarta</strong></div></div>
+<div class="arc-item pos-6" data-idx="6"><img src="Mont Bromo Indonésie _ Volcan Java lever soleil.jpg" alt="Bromo"><div class="arc-badge"><small>Jawa Timur</small><strong>Eksotisme Gunung Bromo</strong></div></div>
+<div class="arc-item pos-7" data-idx="7"><img src="PENGINAPAN2 DAMAE CIKOLE.jpg" alt="Damae Cikole"><div class="arc-badge"><small>Cikole, Lembang</small><strong>Penginapan Alam Damae</strong></div></div>
+<div class="arc-item pos-8" data-idx="8"><img src="fun ofroad1.jpg" alt="Offroad"><div class="arc-badge"><small>Petualangan</small><strong>Fun Offroad Land Rover</strong></div></div>
+<div class="arc-item pos-9" data-idx="9"><img src="fun game lembang.webp" alt="Fun Game"><div class="arc-badge"><small>Outbound</small><strong>Fun Game &amp; Team Building</strong></div></div>
+<div class="arc-item pos-10" data-idx="10"><img src="sewa-mobil-jogja-paket.jpg" alt="Sewa Mobil"><div class="arc-badge"><small>Transportasi</small><strong>Paket Sewa Mobil &amp; Driver</strong></div></div>
 </div>
-<div class="description-panel" id="descPanel">
-<div class="desc-header"><h2 id="descTitle">Eksplorasi Gunung Prau</h2><span class="desc-location" id="descLocation">📍 Dieng, Jawa Tengah</span></div>
-<p class="desc-text" id="descText">Nikmati pesona negeri di atas awan dari puncak Gunung Prau dengan panorama lautan awan pagi hari dan pemandangan megah deretan gunung di Jawa Tengah. Cocok untuk pendakian santai maupun wisata alam bersama rombongan.</p>
-<div class="desc-highlights" id="descHighlights"><span class="highlight-tag">✓ Pemandu Lokal</span><span class="highlight-tag">✓ Spot Golden Sunrise</span><span class="highlight-tag">✓ Dokumentasi Foto</span></div>
+<div class="info-column">
+<span class="welcome-tag">JELAJAHI DESTINASI IMPIAN</span>
+<h1>Liburan Berkesan Bersama <span>Gita Vacation</span></h1>
+<p class="sub-intro">Klik lingkaran wisata di tepi lengkungan gambar atau gunakan tombol panah untuk memutar pilihan destinasi.</p>
+<div class="desc-card" id="descCard">
+<div class="desc-top"><h2 id="dTitle">Eksplorasi Gunung Prau</h2><span class="loc-pill" id="dLoc">📍 Dieng, Jawa Tengah</span></div>
+<p class="desc-body" id="dText">Nikmati pesona negeri di atas awan dari puncak Gunung Prau dengan panorama lautan awan pagi hari dan pemandangan megah deretan gunung di Jawa Tengah. Cocok untuk pendakian santai maupun wisata alam bersama rombongan.</p>
+<div class="tags-wrap" id="dTags"><span class="tag-item">✓ Pemandu Lokal</span><span class="tag-item">✓ Spot Golden Sunrise</span><span class="tag-item">✓ Dokumentasi Foto</span></div>
 </div>
-<div class="orbit-controls">
-<button class="nav-btn" onclick="prevSlide()" aria-label="Sebelumnya">&#10094;</button>
-<div class="dots" id="dotsContainer">
-<span class="dot active" onclick="rotateTo(0)"></span><span class="dot" onclick="rotateTo(1)"></span><span class="dot" onclick="rotateTo(2)"></span><span class="dot" onclick="rotateTo(3)"></span><span class="dot" onclick="rotateTo(4)"></span><span class="dot" onclick="rotateTo(5)"></span><span class="dot" onclick="rotateTo(6)"></span><span class="dot" onclick="rotateTo(7)"></span><span class="dot" onclick="rotateTo(8)"></span><span class="dot" onclick="rotateTo(9)"></span><span class="dot" onclick="rotateTo(10)"></span>
+<div class="controls-bar">
+<button type="button" class="ctrl-btn" id="btnPrev" aria-label="Sebelumnya">&#10094;</button>
+<div class="dots-list" id="dotsList"></div>
+<button type="button" class="ctrl-btn" id="btnNext" aria-label="Berikutnya">&#10095;</button>
 </div>
-<button class="nav-btn" onclick="nextSlide()" aria-label="Berikutnya">&#10095;</button>
 </div>
-</section>
+</main>
 <footer>&copy; 2026 <strong>Gita Vacation</strong> (gitavacation.com). Segera hadir dengan paket wisata lengkap.</footer>
+<script>
+
+document.addEventListener("DOMContentLoaded",function(){
+const dataWisata=[
+{title:"Eksplorasi Gunung Prau",loc:"📍 Dieng, Jawa Tengah",text:"Nikmati pesona negeri di atas awan dari puncak Gunung Prau dengan panorama lautan awan pagi hari dan pemandangan megah deretan gunung di Jawa Tengah. Cocok untuk pendakian santai maupun wisata alam bersama rombongan.",tags:["✓ Pemandu Lokal","✓ Spot Golden Sunrise","✓ Dokumentasi Foto"]},
+{title:"Sunrise Lava Tour Merapi",loc:"📍 Kaliurang, Yogyakarta",text:"Rasakan sensasi berpetualang menyusuri jalur bekas aliran lahar Gunung Merapi menggunakan mobil Jeep 4x4 terbuka. Mengunjungi Museum Sisa Hartaku, Batu Alien, dan manuver seru di Kali Kuning.",tags:["✓ Jeep 4x4 Privat","✓ Driver Berpengalaman","✓ Tiket Masuk Kawasan"]},
+{title:"Obelix Sea View Jogja",loc:"📍 Gunung Kidul, Yogyakarta",text:"Destinasi wisata tebing pinggir laut dengan pemandangan langsung menghadap Samudra Hindia dan Pantai Parangtritis. Dilengkapi berbagai spot foto modern, kolam renang infinity, dan hiburan senja yang memukau.",tags:["✓ Pemandangan Sunset Laut","✓ Spot Foto Ikonik","✓ Cocok untuk Keluarga"]},
+{title:"Grafika Cikole Lembang",loc:"📍 Lembang, Bandung Barat",text:"Kawasan wisata terpadu di tengah sejuknya hutan pinus kaki Gunung Tangkuban Perahu. Menawarkan area rekreasi keluarga, kuliner khas Sunda, hingga berbagai wahana permainan alam terbuka.",tags:["✓ Udara Sejuk Hutan Pinus","✓ Area Wisata Keluarga","✓ Resto & Kuliner Lokal"]},
+{title:"Golden Sunrise Dieng Plateau",loc:"📍 Wonosobo & Banjarnegara",text:"Perjalanan wisata budaya dan alam mengunjungi Bukit Sikunir, Telaga Warna, Kawah Sikidang, serta kompleks Candi Arjuna yang bersejarah dengan suasana kabut pegunungan yang asri.",tags:["✓ Bukit Sikunir","✓ Telaga Warna & Kawah","✓ Wisata Budaya & Alam"]},
+{title:"HeHa Sky View Yogyakarta",loc:"📍 Patuk, Gunung Kidul",text:"Tempat wisata hits di perbukitan Gunung Kidul yang menyajikan panorama gemerlap lampu kota Yogyakarta dari ketinggian, lengkap dengan teras kaca, taman santai, dan beragam pilihan kuliner.",tags:["✓ Sky Glass & Spot Foto","✓ Pemandangan Kota Jogja","✓ Area Santai & Kuliner"]},
+{title:"Eksotisme Gunung Bromo",loc:"📍 Bromo Tengger Semeru",text:"Saksikan keajaiban matahari terbit dari Penanjakan, melintasi lautan pasir luas dengan Jeep Hardtop, mendaki tangga kawah Bromo, serta berfoto di Padang Savana Bukit Teletubbies.",tags:["✓ Sunrise Penanjakan","✓ Kawah & Pasir Berbisik","✓ Bukit Teletubbies"]},
+{title:"Penginapan Alam Damae Cikole",loc:"📍 Cikole, Lembang",text:"Pilihan akomodasi bernuansa alam di kawasan Cikole Lembang yang tenang dan nyaman. Sangat ideal untuk menginap bersama keluarga besar maupun peserta acara gathering perusahaan.",tags:["✓ Suasana Asri & Tenang","✓ Kapasitas Rombongan","✓ Dekat Objek Wisata Lembang"]},
+{title:"Fun Offroad Land Rover",loc:"📍 Cikole & Sukawana, Lembang",text:"Pacu adrenalin Anda melintasi trek lumpur, tanjakan terjal, dan jalanan berbatu di tengah hutan belantara menggunakan armada mobil offroad klasik yang tangguh dan aman.",tags:["✓ Armada Offroad Tangguh","✓ Jalur Hutan & Kebun Teh","✓ Instruktur Profesional"]},
+{title:"Fun Game & Team Building",loc:"📍 Lembang & Bandung",text:"Program kegiatan outbound interaktif yang dirancang khusus untuk mempererat kekompakan tim perusahaan, sekolah, maupun komunitas melalui permainan seru di alam terbuka.",tags:["✓ Instruktur Outbound","✓ Peralatan Permainan Lengkap","✓ Konsep Acara Fleksibel"]},
+{title:"Paket Sewa Mobil & Driver Wisata",loc:"📍 Yogyakarta & Sekitarnya",text:"Layanan transportasi wisata nyaman dengan armada bersih dan terawat, didampingi pengemudi ramah yang menguasai rute wisata lokal untuk memastikan perjalanan Anda tepat waktu dan aman.",tags:["✓ Armada Bersih & Nyaman","✓ Driver Ramah & Berpengalaman","✓ Rute Fleksibel Sesuai Jadwal"]}
+];
+const items=document.querySelectorAll(".arc-item");
+const dotsContainer=document.getElementById("dotsList");
+const descCard=document.getElementById("descCard");
+const dTitle=document.getElementById("dTitle");
+const dLoc=document.getElementById("dLoc");
+const dText=document.getElementById("dText");
+const dTags=document.getElementById("dTags");
+const total=items.length;
+let current=0;
+items.forEach((_,idx)=>{
+const dot=document.createElement("span");
+dot.className=idx===0?"dot-btn active":"dot-btn";
+dot.addEventListener("click",()=>goTo(idx));
+dotsContainer.appendChild(dot);
+});
+const dots=document.querySelectorAll(".dot-btn");
+function render(){
+items.forEach((el,idx)=>{
+const pos=(idx-current+total)%total;
+el.className="arc-item pos-"+pos;
+});
+dots.forEach((d,idx)=>{d.classList.toggle("active",idx===current)});
+const info=dataWisata[current];
+descCard.style.opacity="0.4";
+setTimeout(()=>{
+dTitle.textContent=info.title;
+dLoc.textContent=info.loc;
+dText.textContent=info.text;
+dTags.innerHTML=info.tags.map(t=><span class="tag-item">${t}</span>).join("");
+descCard.style.opacity="1";
+},140);
+}
+function goTo(idx){current=(idx+total)%total;render()}
+items.forEach((el,idx)=>{el.addEventListener("click",()=>{if(idx!==current)goTo(idx)})});
+document.getElementById("btnNext").addEventListener("click",()=>goTo(current+1));
+document.getElementById("btnPrev").addEventListener("click",()=>goTo(current-1));
+const stage=document.getElementById("arcStage");
+let startX=0;
+stage.addEventListener("touchstart",e=>{startX=e.touches[0].clientX},{passive:true});
+stage.addEventListener("touchend",e=>{const diff=startX-e.changedTouches[0].clientX;if(Math.abs(diff)>40)goTo(diff>0?current+1:current-1)});
+stage.addEventListener("mousedown",e=>{startX=e.clientX});
+stage.addEventListener("mouseup",e=>{const diff=startX-e.clientX;if(Math.abs(diff)>40)goTo(diff>0?current+1:current-1)});
+});
