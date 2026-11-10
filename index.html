@@ -1,555 +1,125 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gita Vacation - Jelajahi Keindahan Wisata</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        body {
-            background-color: #ffffff;
-            color: #1e293b;
-            overflow-x: hidden;
-        }
-
-        /* Header / Navbar */
-        header {
-            background-color: #ffffff;
-            padding: 20px 5%;
-            border-bottom: 1px solid #e2e8f0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .brand {
-            font-size: 26px;
-            font-weight: 800;
-            color: #0f172a;
-            letter-spacing: -0.5px;
-        }
-        .brand span {
-            color: #059669;
-        }
-        .status-badge {
-            background-color: #d1fae5;
-            color: #065f46;
-            padding: 6px 14px;
-            border-radius: 50px;
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-        /* Bagian Utama (Hero) */
-        .hero {
-            text-align: center;
-            padding: 40px 20px 15px;
-            background: linear-gradient(180deg, #ecfdf5 0%, #ffffff 100%);
-        }
-        .hero h1 {
-            font-size: 38px;
-            color: #0f172a;
-            margin-bottom: 10px;
-            font-weight: 800;
-        }
-        .hero h1 span {
-            color: #059669;
-        }
-        .hero p {
-            font-size: 16px;
-            color: #475569;
-            max-width: 640px;
-            margin: 0 auto;
-            line-height: 1.6;
-        }
-        .hint-text {
-            display: inline-block;
-            margin-top: 12px;
-            font-size: 13px;
-            color: #059669;
-            background: #ecfdf5;
-            padding: 6px 16px;
-            border-radius: 50px;
-            font-weight: 600;
-            border: 1px solid #a7f3d0;
-        }
-
-        /* Area Orbit Carousel Berputar (11 Foto) */
-        .orbit-wrapper {
-            max-width: 1150px;
-            margin: 5px auto 70px;
-            padding: 0 20px;
-            position: relative;
-        }
-        .orbit-stage {
-            position: relative;
-            width: 100%;
-            height: 520px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            perspective: 1200px;
-            touch-action: pan-y;
-        }
-
-        /* Kartu Gambar */
-        .orbit-item {
-            position: absolute;
-            transition: all 0.75s cubic-bezier(0.25, 1, 0.5, 1);
-            overflow: hidden;
-            box-shadow: 0 18px 36px rgba(15, 23, 42, 0.16);
-            cursor: pointer;
-            background-color: #d1fae5;
-            user-select: none;
-        }
-        .orbit-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            pointer-events: none;
-        }
-
-        /* Posisi 0: Gambar Utama di Tengah */
-        .orbit-item.pos-0 {
-            width: 500px;
-            height: 325px;
-            border-radius: 26px;
-            border: 5px solid #ffffff;
-            transform: translate3d(0, 0, 120px) rotate(0deg);
-            z-index: 30;
-            opacity: 1;
-            cursor: default;
-        }
-
-        /* 10 Posisi Lingkaran Mengelilingi Gambar Utama */
-        .orbit-item.pos-1 {
-            width: 98px; height: 98px; border-radius: 50%; border: 3px solid #ffffff;
-            transform: translate3d(340px, -110px, 20px) rotate(12deg); z-index: 22; opacity: 0.95;
-        }
-        .orbit-item.pos-2 {
-            width: 112px; height: 112px; border-radius: 50%; border: 4px solid #ffffff;
-            transform: translate3d(370px, 20px, 30px) rotate(22deg); z-index: 24; opacity: 0.98;
-        }
-        .orbit-item.pos-3 {
-            width: 95px; height: 95px; border-radius: 50%; border: 3px solid #ffffff;
-            transform: translate3d(295px, 155px, 15px) rotate(32deg); z-index: 21; opacity: 0.92;
-        }
-        .orbit-item.pos-4 {
-            width: 85px; height: 85px; border-radius: 50%; border: 3px solid #ffffff;
-            transform: translate3d(150px, 215px, 5px) rotate(42deg); z-index: 19; opacity: 0.88;
-        }
-        .orbit-item.pos-5 {
-            width: 82px; height: 82px; border-radius: 50%; border: 3px solid #ffffff;
-            transform: translate3d(0px, 225px, 0px) rotate(0deg); z-index: 18; opacity: 0.85;
-        }
-        .orbit-item.pos-6 {
-            width: 85px; height: 85px; border-radius: 50%; border: 3px solid #ffffff;
-            transform: translate3d(-150px, 215px, 5px) rotate(-42deg); z-index: 19; opacity: 0.88;
-        }
-        .orbit-item.pos-7 {
-            width: 95px; height: 95px; border-radius: 50%; border: 3px solid #ffffff;
-            transform: translate3d(-295px, 155px, 15px) rotate(-32deg); z-index: 21; opacity: 0.92;
-        }
-        .orbit-item.pos-8 {
-            width: 112px; height: 112px; border-radius: 50%; border: 4px solid #ffffff;
-            transform: translate3d(-370px, 20px, 30px) rotate(-22deg); z-index: 24; opacity: 0.98;
-        }
-        .orbit-item.pos-9 {
-            width: 98px; height: 98px; border-radius: 50%; border: 3px solid #ffffff;
-            transform: translate3d(-340px, -110px, 20px) rotate(-12deg); z-index: 22; opacity: 0.95;
-        }
-        .orbit-item.pos-10 {
-            width: 85px; height: 85px; border-radius: 50%; border: 3px solid #ffffff;
-            transform: translate3d(0px, -215px, -30px) rotate(180deg); z-index: 16; opacity: 0.82;
-        }
-
-        .orbit-item:not(.pos-0):hover {
-            border-color: #059669;
-            opacity: 1;
-            box-shadow: 0 12px 28px rgba(5, 150, 105, 0.35);
-        }
-
-        /* Judul Singkat di Dalam Gambar Utama */
-        .orbit-caption {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 25px 24px 18px;
-            background: linear-gradient(to top, rgba(15, 23, 42, 0.85), transparent);
-            color: #ffffff;
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }
-        .orbit-item.pos-0 .orbit-caption {
-            opacity: 1;
-        }
-        .orbit-caption span {
-            display: inline-block;
-            background-color: #059669;
-            font-size: 11px;
-            font-weight: 700;
-            padding: 3px 10px;
-            border-radius: 50px;
-            margin-bottom: 6px;
-            text-transform: uppercase;
-        }
-        .orbit-caption h3 {
-            font-size: 21px;
-            font-weight: 700;
-        }
-
-        /* Kotak Deskripsi Wisata Otomatis (Tampil Tanpa Perlu Klik Gambar Utama) */
-        .description-panel {
-            max-width: 720px;
-            margin: 15px auto 25px;
-            background-color: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-left: 5px solid #059669;
-            border-radius: 18px;
-            padding: 24px 28px;
-            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.05);
-            transition: opacity 0.3s ease, transform 0.3s ease;
-        }
-        .desc-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-        .desc-header h2 {
-            font-size: 22px;
-            color: #0f172a;
-            font-weight: 800;
-        }
-        .desc-location {
-            background-color: #d1fae5;
-            color: #065f46;
-            font-size: 12.5px;
-            font-weight: 700;
-            padding: 4px 12px;
-            border-radius: 50px;
-        }
-        .desc-text {
-            font-size: 15px;
-            color: #475569;
-            line-height: 1.65;
-            margin-bottom: 14px;
-        }
-        .desc-highlights {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        .highlight-tag {
-            background-color: #ffffff;
-            border: 1px solid #cbd5e1;
-            color: #334155;
-            font-size: 12.5px;
-            font-weight: 600;
-            padding: 5px 12px;
-            border-radius: 8px;
-        }
-
-        /* Tombol Navigasi & Indikator Titik */
-        .orbit-controls {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 16px;
-        }
-        .nav-btn {
-            background-color: #ecfdf5;
-            color: #059669;
-            border: 1px solid #a7f3d0;
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .nav-btn:hover {
-            background-color: #059669;
-            color: #ffffff;
-        }
-        .dots {
-            display: flex;
-            gap: 7px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        .dot {
-            width: 9px;
-            height: 9px;
-            border-radius: 50%;
-            background-color: #cbd5e1;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .dot.active {
-            width: 26px;
-            border-radius: 10px;
-            background-color: #059669;
-        }
-
-        /* Footer */
-        footer {
-            background-color: #0f172a;
-            color: #94a3b8;
-            text-align: center;
-            padding: 30px 20px;
-            font-size: 14px;
-        }
-        footer strong {
-            color: #ffffff;
-        }
-
-        /* Responsif Tablet */
-@media (max-width: 920px) {
-.orbit-stage { height: 460px; }
-.orbit-item.pos-0 { width: 76%; max-width: 400px; height: 255px; }
-.orbit-item.pos-1 { width: 68px; height: 68px; transform: translate3d(195px, -85px, 10px); }
-.orbit-item.pos-2 { width: 74px; height: 74px; transform: translate3d(215px, 15px, 20px); }
-.orbit-item.pos-3 { width: 66px; height: 66px; transform: translate3d(175px, 120px, 10px); }
-.orbit-item.pos-4 { width: 60px; height: 60px; transform: translate3d(95px, 175px, 5px); }
-.orbit-item.pos-5 { width: 58px; height: 58px; transform: translate3d(0px, 185px, 0px); }
-.orbit-item.pos-6 { width: 60px; height: 60px; transform: translate3d(-95px, 175px, 5px); }
-.orbit-item.pos-7 { width: 66px; height: 66px; transform: translate3d(-175px, 120px, 10px); }
-.orbit-item.pos-8 { width: 74px; height: 74px; transform: translate3d(-215px, 15px, 20px); }
-.orbit-item.pos-9 { width: 68px; height: 68px; transform: translate3d(-195px, -85px, 10px); }
-.orbit-item.pos-10 { width: 60px; height: 60px; transform: translate3d(0px, -170px, -25px); }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gita Vacation - Jelajahi Keindahan Wisata</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif}
+body{background:#fff;color:#1e293b;overflow-x:hidden}
+header{background:#fff;padding:20px 5%;border-bottom:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center}
+.brand{font-size:26px;font-weight:800;color:#0f172a;letter-spacing:-0.5px}
+.brand span{color:#059669}
+.status-badge{background:#d1fae5;color:#065f46;padding:6px 14px;border-radius:50px;font-size:13px;font-weight:600}
+.hero{text-align:center;padding:40px 20px 15px;background:linear-gradient(180deg,#ecfdf5 0%,#fff 100%)}
+.hero h1{font-size:38px;color:#0f172a;margin-bottom:10px;font-weight:800}
+.hero h1 span{color:#059669}
+.hero p{font-size:16px;color:#475569;max-width:640px;margin:0 auto;line-height:1.6}
+.hint-text{display:inline-block;margin-top:12px;font-size:13px;color:#059669;background:#ecfdf5;padding:6px 16px;border-radius:50px;font-weight:600;border:1px solid #a7f3d0}
+.orbit-wrapper{max-width:1150px;margin:5px auto 70px;padding:0 20px;position:relative}
+.orbit-stage{position:relative;width:100%;height:520px;display:flex;justify-content:center;align-items:center;perspective:1200px;touch-action:pan-y}
+.orbit-item{position:absolute;transition:all .75s cubic-bezier(.25,1,.5,1);overflow:hidden;box-shadow:0 18px 36px rgba(15,23,42,.16);cursor:pointer;background:#d1fae5;user-select:none}
+.orbit-item img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
+.orbit-item.pos-0{width:500px;height:325px;border-radius:26px;border:5px solid #fff;transform:translate3d(0,0,120px) rotate(0deg);z-index:30;opacity:1;cursor:default}
+.orbit-item.pos-1{width:98px;height:98px;border-radius:50%;border:3px solid #fff;transform:translate3d(340px,-110px,20px) rotate(12deg);z-index:22;opacity:.95}
+.orbit-item.pos-2{width:112px;height:112px;border-radius:50%;border:4px solid #fff;transform:translate3d(370px,20px,30px) rotate(22deg);z-index:24;opacity:.98}
+.orbit-item.pos-3{width:95px;height:95px;border-radius:50%;border:3px solid #fff;transform:translate3d(295px,155px,15px) rotate(32deg);z-index:21;opacity:.92}
+.orbit-item.pos-4{width:85px;height:85px;border-radius:50%;border:3px solid #fff;transform:translate3d(150px,215px,5px) rotate(42deg);z-index:19;opacity:.88}
+.orbit-item.pos-5{width:82px;height:82px;border-radius:50%;border:3px solid #fff;transform:translate3d(0,225px,0) rotate(0deg);z-index:18;opacity:.85}
+.orbit-item.pos-6{width:85px;height:85px;border-radius:50%;border:3px solid #fff;transform:translate3d(-150px,215px,5px) rotate(-42deg);z-index:19;opacity:.88}
+.orbit-item.pos-7{width:95px;height:95px;border-radius:50%;border:3px solid #fff;transform:translate3d(-295px,155px,15px) rotate(-32deg);z-index:21;opacity:.92}
+.orbit-item.pos-8{width:112px;height:112px;border-radius:50%;border:4px solid #fff;transform:translate3d(-370px,20px,30px) rotate(-22deg);z-index:24;opacity:.98}
+.orbit-item.pos-9{width:98px;height:98px;border-radius:50%;border:3px solid #fff;transform:translate3d(-340px,-110px,20px) rotate(-12deg);z-index:22;opacity:.95}
+.orbit-item.pos-10{width:85px;height:85px;border-radius:50%;border:3px solid #fff;transform:translate3d(0,-215px,-30px) rotate(180deg);z-index:16;opacity:.82}
+.orbit-item:not(.pos-0):hover{border-color:#059669;opacity:1;box-shadow:0 12px 28px rgba(5,150,105,.35)}
+.orbit-caption{position:absolute;bottom:0;left:0;right:0;padding:25px 24px 18px;background:linear-gradient(to top,rgba(15,23,42,.85),transparent);color:#fff;opacity:0;transition:opacity .4s ease}
+.orbit-item.pos-0 .orbit-caption{opacity:1}
+.orbit-caption span{display:inline-block;background:#059669;font-size:11px;font-weight:700;padding:3px 10px;border-radius:50px;margin-bottom:6px;text-transform:uppercase}
+.orbit-caption h3{font-size:21px;font-weight:700}
+.description-panel{max-width:720px;margin:15px auto 25px;background:#f8fafc;border:1px solid #e2e8f0;border-left:5px solid #059669;border-radius:18px;padding:24px 28px;box-shadow:0 10px 25px rgba(15,23,42,.05);transition:opacity .3s ease}
+.desc-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:10px}
+.desc-header h2{font-size:22px;color:#0f172a;font-weight:800}
+.desc-location{background:#d1fae5;color:#065f46;font-size:12.5px;font-weight:700;padding:4px 12px;border-radius:50px}
+.desc-text{font-size:15px;color:#475569;line-height:1.65;margin-bottom:14px}
+.desc-highlights{display:flex;flex-wrap:wrap;gap:8px}
+.highlight-tag{background:#fff;border:1px solid #cbd5e1;color:#334155;font-size:12.5px;font-weight:600;padding:5px 12px;border-radius:8px}
+.orbit-controls{display:flex;justify-content:center;align-items:center;gap:16px}
+.nav-btn{background:#ecfdf5;color:#059669;border:1px solid #a7f3d0;width:42px;height:42px;border-radius:50%;font-size:18px;font-weight:700;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center}
+.nav-btn:hover{background:#059669;color:#fff}
+.dots{display:flex;gap:7px;flex-wrap:wrap;justify-content:center}
+.dot{width:9px;height:9px;border-radius:50%;background:#cbd5e1;cursor:pointer;transition:all .3s}
+.dot.active{width:26px;border-radius:10px;background:#059669}
+footer{background:#0f172a;color:#94a3b8;text-align:center;padding:30px 20px;font-size:14px}
+footer strong{color:#fff}
+@media(max-width:920px){
+.orbit-stage{height:460px}
+.orbit-item.pos-0{width:76%;max-width:400px;height:255px}
+.orbit-item.pos-1{width:68px;height:68px;transform:translate3d(195px,-85px,10px)}
+.orbit-item.pos-2{width:74px;height:74px;transform:translate3d(215px,15px,20px)}
+.orbit-item.pos-3{width:66px;height:66px;transform:translate3d(175px,120px,10px)}
+.orbit-item.pos-4{width:60px;height:60px;transform:translate3d(95px,175px,5px)}
+.orbit-item.pos-5{width:58px;height:58px;transform:translate3d(0,185px,0)}
+.orbit-item.pos-6{width:60px;height:60px;transform:translate3d(-95px,175px,5px)}
+.orbit-item.pos-7{width:66px;height:66px;transform:translate3d(-175px,120px,10px)}
+.orbit-item.pos-8{width:74px;height:74px;transform:translate3d(-215px,15px,20px)}
+.orbit-item.pos-9{width:68px;height:68px;transform:translate3d(-195px,-85px,10px)}
+.orbit-item.pos-10{width:60px;height:60px;transform:translate3d(0,-170px,-25px)}
 }
-/* Responsif HP */
-@media (max-width: 540px) {
-.hero h1 { font-size: 28px; }
-.orbit-stage { height: 410px; }
-.orbit-item.pos-0 { width: 86%; height: 205px; }
-.orbit-item.pos-1 { width: 50px; height: 50px; transform: translate3d(130px, -75px, 10px); }
-.orbit-item.pos-2 { width: 54px; height: 54px; transform: translate3d(142px, 10px, 20px); }
-.orbit-item.pos-3 { width: 48px; height: 48px; transform: translate3d(118px, 100px, 10px); }
-.orbit-item.pos-4 { width: 44px; height: 44px; transform: translate3d(62px, 145px, 5px); }
-.orbit-item.pos-5 { width: 44px; height: 44px; transform: translate3d(0px, 155px, 0px); }
-.orbit-item.pos-6 { width: 44px; height: 44px; transform: translate3d(-62px, 145px, 5px); }
-.orbit-item.pos-7 { width: 48px; height: 48px; transform: translate3d(-118px, 100px, 10px); }
-.orbit-item.pos-8 { width: 54px; height: 54px; transform: translate3d(-142px, 10px, 20px); }
-.orbit-item.pos-9 { width: 50px; height: 50px; transform: translate3d(-130px, -75px, 10px); }
-.orbit-item.pos-10 { width: 44px; height: 44px; transform: translate3d(0px, -142px, -25px); }
-.orbit-caption h3 { font-size: 17px; }
-.description-panel { padding: 18px 20px; }
-.desc-header h2 { font-size: 19px; }
+@media(max-width:540px){
+.hero h1{font-size:28px}
+.orbit-stage{height:410px}
+.orbit-item.pos-0{width:86%;height:205px}
+.orbit-item.pos-1{width:50px;height:50px;transform:translate3d(130px,-75px,10px)}
+.orbit-item.pos-2{width:54px;height:54px;transform:translate3d(142px,10px,20px)}
+.orbit-item.pos-3{width:48px;height:48px;transform:translate3d(118px,100px,10px)}
+.orbit-item.pos-4{width:44px;height:44px;transform:translate3d(62px,145px,5px)}
+.orbit-item.pos-5{width:44px;height:44px;transform:translate3d(0,155px,0)}
+.orbit-item.pos-6{width:44px;height:44px;transform:translate3d(-62px,145px,5px)}
+.orbit-item.pos-7{width:48px;height:48px;transform:translate3d(-118px,100px,10px)}
+.orbit-item.pos-8{width:54px;height:54px;transform:translate3d(-142px,10px,20px)}
+.orbit-item.pos-9{width:50px;height:50px;transform:translate3d(-130px,-75px,10px)}
+.orbit-item.pos-10{width:44px;height:44px;transform:translate3d(0,-142px,-25px)}
+.orbit-caption h3{font-size:17px}
+.description-panel{padding:18px 20px}
+.desc-header h2{font-size:19px}
 }
-
-
-GitaVacation
-Official Website
-Selamat Datang di Gita Vacation
-Temukan inspirasi perjalanan dan nikmati keindahan pesona alam bersama layanan wisata terpercaya untuk liburan impian Anda.
-Klik lingkaran di sekeliling gambar atau geser untuk memutar destinasi
-Dieng Plateau
-Eksplorasi Gunung Prau
-
-Yogyakarta
-Sunrise Lava Tour Merapi
-
-Gunung Kidul
-Obelix Sea View Jogja
-
-Lembang, Bandung
-Grafika Cikole Lembang
-
-Wonosobo & Banjarnegara
-Golden Sunrise Dieng
-
-Patuk, Gunung Kidul
-HeHa Sky View Yogyakarta
-
-Jawa Timur
-Eksotisme Gunung Bromo
-
-Cikole, Lembang
-Penginapan Alam Damae Cikole
-
-Wisata Petualangan
-Fun Offroad Land Rover
-
-Outbound & Gathering
-Fun Game & Team Building
-
-Layanan Transportasi
-Paket Sewa Mobil & Driver
-
-
-Eksplorasi Gunung Prau
-📍 Dieng, Jawa Tengah
-
-
-Nikmati pesona negeri di atas awan dari puncak Gunung Prau dengan panorama lautan awan pagi hari dan pemandangan megah deretan gunung di Jawa Tengah. Cocok untuk pendakian santai maupun wisata alam bersama rombongan.
-
-
-✓ Pemandu Lokal
-✓ Spot Golden Sunrise
-✓ Dokumentasi Foto
-
-❮
-
-
-
-
-
-
-
-
-
-
-
-
-
-❯
-
-© 2026 Gita Vacation (gitavacation.com). Segera hadir dengan paket wisata lengkap.
-// Data Deskripsi Lengkap untuk Masing-Masing Destinasi
-const wisataData = [
-{
-title: "Eksplorasi Gunung Prau",
-location: "📍 Dieng, Jawa Tengah",
-text: "Nikmati pesona negeri di atas awan dari puncak Gunung Prau dengan panorama lautan awan pagi hari dan pemandangan megah deretan gunung di Jawa Tengah. Cocok untuk pendakian santai maupun wisata alam bersama rombongan.",
-highlights: ["✓ Pemandu Lokal", "✓ Spot Golden Sunrise", "✓ Dokumentasi Foto"]
-},
-{
-title: "Sunrise Lava Tour Merapi",
-location: "📍 Kaliurang, Yogyakarta",
-text: "Rasakan sensasi berpetualang menyusuri jalur bekas aliran lahar Gunung Merapi menggunakan mobil Jeep 4x4 terbuka. Mengunjungi Museum Sisa Hartaku, Batu Alien, dan manuver seru di Kali Kuning.",
-highlights: ["✓ Jeep 4x4 Privat", "✓ Driver Berpengalaman", "✓ Tiket Masuk Kawasan"]
-},
-{
-title: "Obelix Sea View Jogja",
-location: "📍 Gunung Kidul, Yogyakarta",
-text: "Destinasi wisata tebing pinggir laut dengan pemandangan langsung menghadap Samudra Hindia dan Pantai Parangtritis. Dilengkapi berbagai spot foto modern, kolam renang infinity, dan hiburan senja yang memukau.",
-highlights: ["✓ Pemandangan Sunset Laut", "✓ Spot Foto Ikonik", "✓ Cocok untuk Keluarga"]
-},
-{
-title: "Grafika Cikole Lembang",
-location: "📍 Lembang, Bandung Barat",
-text: "Kawasan wisata terpadu di tengah sejuknya hutan pinus kaki Gunung Tangkuban Perahu. Menawarkan area rekreasi keluarga, kuliner khas Sunda, hingga berbagai wahana permainan alam terbuka.",
-highlights: ["✓ Udara Sejuk Hutan Pinus", "✓ Area Wisata Keluarga", "✓ Resto & Kuliner Lokal"]
-},
-{
-title: "Golden Sunrise Dieng Plateau",
-location: "📍 Wonosobo & Banjarnegara",
-text: "Perjalanan wisata budaya dan alam mengunjungi Bukit Sikunir, Telaga Warna, Kawah Sikidang, serta kompleks Candi Arjuna yang bersejarah dengan suasana kabut pegunungan yang asri.",
-highlights: ["✓ Bukit Sikunir", "✓ Telaga Warna & Kawah", "✓ Wisata Budaya & Alam"]
-},
-{
-title: "HeHa Sky View Yogyakarta",
-location: "📍 Patuk, Gunung Kidul",
-text: "Tempat wisata hits di perbukitan Gunung Kidul yang menyajikan panorama gemerlap lampu kota Yogyakarta dari ketinggian, lengkap dengan teras kaca, taman santai, dan beragam pilihan kuliner.",
-highlights: ["✓ Sky Glass & Spot Foto", "✓ Pemandangan Kota Jogja", "✓ Area Santai & Kuliner"]
-},
-{
-title: "Eksotisme Gunung Bromo",
-location: "📍 Taman Nasional Bromo Tengger Semeru",
-text: "Saksikan keajaiban matahari terbit dari Penanjakan, melintasi lautan pasir luas dengan Jeep Hardtop, mendaki tangga kawah Bromo, serta berfoto di Padang Savana Bukit Teletubbies.",
-highlights: ["✓ Sunrise Penanjakan", "✓ Kawah & Pasir Berbisik", "✓ Bukit Teletubbies"]
-},
-{
-title: "Penginapan Alam Damae Cikole",
-location: "📍 Cikole, Lembang",
-text: "Pilihan akomodasi bernuansa alam di kawasan Cikole Lembang yang tenang dan nyaman. Sangat ideal untuk menginap bersama keluarga besar maupun peserta acara gathering perusahaan.",
-highlights: ["✓ Suasana Asri & Tenang", "✓ Kapasitas Rombongan", "✓ Dekat Objek Wisata Lembang"]
-},
-{
-title: "Fun Offroad Land Rover",
-location: "📍 Cikole & Sukawana, Lembang",
-text: "Pacu adrenalin Anda melintasi trek lumpur, tanjakan terjal, dan jalanan berbatu di tengah hutan belantara menggunakan armada mobil offroad klasik yang tangguh dan aman.",
-highlights: ["✓ Armada Offroad Tangguh", "✓ Jalur Hutan & Kebun Teh", "✓ Instruktur Profesional"]
-},
-{
-title: "Fun Game & Team Building",
-location: "📍 Lembang & Bandung",
-text: "Program kegiatan outbound interaktif yang dirancang khusus untuk mempererat kekompakan tim perusahaan, sekolah, maupun komunitas melalui permainan seru di alam terbuka.",
-highlights: ["✓ Instruktur Outbound", "✓ Peralatan Permainan Lengkap", "✓ Konsep Acara Fleksibel"]
-},
-{
-title: "Paket Sewa Mobil & Driver Wisata",
-location: "📍 Yogyakarta & Seluruh Destinasi",
-text: "Layanan transportasi wisata nyaman dengan armada bersih dan terawat, didampingi pengemudi ramah yang menguasai rute wisata lokal untuk memastikan perjalanan Anda tepat waktu dan aman.",
-highlights: ["✓ Armada Bersih & Nyaman", "✓ Driver Ramah & Berpengalaman", "✓ Rute Fleksibel Sesuai Jadwal"]
-}
-];
-const items = document.querySelectorAll('.orbit-item');
-const dots = document.querySelectorAll('.dot');
-const total = items.length;
-let activeIndex = 0;
-// Elemen Panel Deskripsi
-const descPanel = document.getElementById('descPanel');
-const descTitle = document.getElementById('descTitle');
-const descLocation = document.getElementById('descLocation');
-const descText = document.getElementById('descText');
-const descHighlights = document.getElementById('descHighlights');
-function updateDescription(index) {
-const data = wisataData[index];
-descPanel.style.opacity = '0.4';
-setTimeout(() => {
-descTitle.textContent = data.title;
-descLocation.textContent = data.location;
-descText.textContent = data.text;
-descHighlights.innerHTML = data.highlights
-.map(item => <span class="highlight-tag">${item}</span>)
-.join('');
-descPanel.style.opacity = '1';
-}, 150);
-}
-function updatePositions() {
-items.forEach((item, index) => {
-const relativePos = (index - activeIndex + total) % total;
-item.className = orbit-item pos-${relativePos};
-});
-dots.forEach((dot, index) => {
-dot.classList.toggle('active', index === activeIndex);
-});
-// Perbarui deskripsi otomatis sesuai gambar yang sedang berada di tengah
-updateDescription(activeIndex);
-}
-function rotateTo(targetIndex) {
-activeIndex = targetIndex;
-updatePositions();
-}
-function nextSlide() {
-activeIndex = (activeIndex + 1) % total;
-updatePositions();
-}
-function prevSlide() {
-activeIndex = (activeIndex - 1 + total) % total;
-updatePositions();
-}
-// Fitur Geser (Swipe / Drag) untuk HP & Mouse
-const stage = document.getElementById('orbitStage');
-let startX = 0;
-stage.addEventListener('touchstart', (e) => {
-startX = e.touches.clientX;
-}, { passive: true });
-stage.addEventListener('touchend', (e) => {
-const endX = e.changedTouches.clientX;
-if (startX - endX > 40) nextSlide();
-if (endX - startX > 40) prevSlide();
-});
-stage.addEventListener('mousedown', (e) => {
-startX = e.clientX;
-});
-stage.addEventListener('mouseup', (e) => {
-const endX = e.clientX;
-if (startX - endX > 40) nextSlide();
-if (endX - startX > 40) prevSlide();
-});
+</style>
+</head>
+<body>
+<header>
+<div class="brand">Gita<span>Vacation</span></div>
+<div class="status-badge">Official Website</div>
+</header>
+<section class="hero">
+<h1>Selamat Datang di <span>Gita Vacation</span></h1>
+<p>Temukan inspirasi perjalanan dan nikmati keindahan pesona alam bersama layanan wisata terpercaya untuk liburan impian Anda.</p>
+<div class="hint-text">Klik lingkaran di sekeliling gambar atau geser untuk memutar destinasi</div>
+</section>
+<section class="orbit-wrapper">
+<div class="orbit-stage" id="orbitStage">
+<div class="orbit-item pos-0" onclick="rotateTo(0)"><img src="Mountain Prau.jpg" alt="Gunung Prau"><div class="orbit-caption"><span>Dieng Plateau</span><h3>Eksplorasi Gunung Prau</h3></div></div>
+<div class="orbit-item pos-1" onclick="rotateTo(1)"><img src="sunrise-lava-tour-merapi.jpg" alt="Merapi"><div class="orbit-caption"><span>Yogyakarta</span><h3>Sunrise Lava Tour Merapi</h3></div></div>
+<div class="orbit-item pos-2" onclick="rotateTo(2)"><img src="Obelix-Sea-View-Gunung-Kidul.png" alt="Obelix"><div class="orbit-caption"><span>Gunung Kidul</span><h3>Obelix Sea View Jogja</h3></div></div>
+<div class="orbit-item pos-3" onclick="rotateTo(3)"><img src="grafika-cikole-lembang.jpg" alt="Grafika Cikole"><div class="orbit-caption"><span>Lembang, Bandung</span><h3>Grafika Cikole Lembang</h3></div></div>
+<div class="orbit-item pos-4" onclick="rotateTo(4)"><img src="Dieng _ Mountain Sunrise.jpg" alt="Dieng"><div class="orbit-caption"><span>Wonosobo &amp; Banjarnegara</span><h3>Golden Sunrise Dieng</h3></div></div>
+<div class="orbit-item pos-5" onclick="rotateTo(5)"><img src="Heha sky.jpg" alt="HeHa Sky"><div class="orbit-caption"><span>Patuk, Gunung Kidul</span><h3>HeHa Sky View Yogyakarta</h3></div></div>
+<div class="orbit-item pos-6" onclick="rotateTo(6)"><img src="Mont Bromo Indonésie _ Volcan Java lever soleil.jpg" alt="Bromo"><div class="orbit-caption"><span>Jawa Timur</span><h3>Eksotisme Gunung Bromo</h3></div></div>
+<div class="orbit-item pos-7" onclick="rotateTo(7)"><img src="PENGINAPAN2 DAMAE CIKOLE.jpg" alt="Damae Cikole"><div class="orbit-caption"><span>Cikole, Lembang</span><h3>Penginapan Alam Damae Cikole</h3></div></div>
+<div class="orbit-item pos-8" onclick="rotateTo(8)"><img src="fun ofroad1.jpg" alt="Offroad"><div class="orbit-caption"><span>Wisata Petualangan</span><h3>Fun Offroad Land Rover</h3></div></div>
+<div class="orbit-item pos-9" onclick="rotateTo(9)"><img src="fun game lembang.webp" alt="Fun Game"><div class="orbit-caption"><span>Outbound &amp; Gathering</span><h3>Fun Game &amp; Team Building</h3></div></div>
+<div class="orbit-item pos-10" onclick="rotateTo(10)"><img src="sewa-mobil-jogja-paket.jpg" alt="Sewa Mobil"><div class="orbit-caption"><span>Layanan Transportasi</span><h3>Paket Sewa Mobil &amp; Driver</h3></div></div>
+</div>
+<div class="description-panel" id="descPanel">
+<div class="desc-header"><h2 id="descTitle">Eksplorasi Gunung Prau</h2><span class="desc-location" id="descLocation">📍 Dieng, Jawa Tengah</span></div>
+<p class="desc-text" id="descText">Nikmati pesona negeri di atas awan dari puncak Gunung Prau dengan panorama lautan awan pagi hari dan pemandangan megah deretan gunung di Jawa Tengah. Cocok untuk pendakian santai maupun wisata alam bersama rombongan.</p>
+<div class="desc-highlights" id="descHighlights"><span class="highlight-tag">✓ Pemandu Lokal</span><span class="highlight-tag">✓ Spot Golden Sunrise</span><span class="highlight-tag">✓ Dokumentasi Foto</span></div>
+</div>
+<div class="orbit-controls">
+<button class="nav-btn" onclick="prevSlide()" aria-label="Sebelumnya">&#10094;</button>
+<div class="dots" id="dotsContainer">
+<span class="dot active" onclick="rotateTo(0)"></span><span class="dot" onclick="rotateTo(1)"></span><span class="dot" onclick="rotateTo(2)"></span><span class="dot" onclick="rotateTo(3)"></span><span class="dot" onclick="rotateTo(4)"></span><span class="dot" onclick="rotateTo(5)"></span><span class="dot" onclick="rotateTo(6)"></span><span class="dot" onclick="rotateTo(7)"></span><span class="dot" onclick="rotateTo(8)"></span><span class="dot" onclick="rotateTo(9)"></span><span class="dot" onclick="rotateTo(10)"></span>
+</div>
+<button class="nav-btn" onclick="nextSlide()" aria-label="Berikutnya">&#10095;</button>
+</div>
+</section>
+<footer>&copy; 2026 <strong>Gita Vacation</strong> (gitavacation.com). Segera hadir dengan paket wisata lengkap.</footer>
