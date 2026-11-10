@@ -11,7 +11,7 @@ header{background:#fff;padding:18px 5%;border-bottom:1px solid #e2e8f0;display:f
 .brand{font-size:26px;font-weight:800;color:#0f172a;letter-spacing:-0.5px}
 .brand span{color:#059669}
 .status-badge{background:#d1fae5;color:#065f46;padding:6px 14px;border-radius:50px;font-size:13px;font-weight:600}
-.showcase-layout{display:grid;grid-template-columns:1.15fr 0.85fr;align-items:center;min-height:600px;background:linear-gradient(135deg,#ecfdf5 0%,#ffffff 65%);padding:30px 5% 40px 0;gap:30px}
+.showcase-layout{display:grid;grid-template-columns:1.15fr 0.85fr;align-items:center;min-height:600px;background:linear-gradient(135deg,rgba(236,253,245,0.88) 0%,rgba(255,255,255,0.92) 70%),url('Bromo Volcano Jeep Land Cruisser.jpg') center/cover no-repeat fixed;padding:30px 5% 40px 0;gap:30px}
 .arc-container{position:relative;width:100%;height:560px;display:flex;align-items:center;touch-action:pan-y}
 .arc-item{position:absolute;transition:all .7s cubic-bezier(.22,1,.36,1);overflow:hidden;cursor:pointer;background:#d1fae5;user-select:none}
 .arc-item img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;transition:transform .6s ease}
@@ -116,8 +116,6 @@ footer strong{color:#fff}
 </main>
 <footer>&copy; 2026 <strong>Gita Vacation</strong> (gitavacation.com). Segera hadir dengan paket wisata lengkap.</footer>
 <script>
-
-document.addEventListener("DOMContentLoaded",function(){
 const dataWisata=[
 {title:"Eksplorasi Gunung Prau",loc:"📍 Dieng, Jawa Tengah",text:"Nikmati pesona negeri di atas awan dari puncak Gunung Prau dengan panorama lautan awan pagi hari dan pemandangan megah deretan gunung di Jawa Tengah. Cocok untuk pendakian santai maupun wisata alam bersama rombongan.",tags:["✓ Pemandu Lokal","✓ Spot Golden Sunrise","✓ Dokumentasi Foto"]},
 {title:"Sunrise Lava Tour Merapi",loc:"📍 Kaliurang, Yogyakarta",text:"Rasakan sensasi berpetualang menyusuri jalur bekas aliran lahar Gunung Merapi menggunakan mobil Jeep 4x4 terbuka. Mengunjungi Museum Sisa Hartaku, Batu Alien, dan manuver seru di Kali Kuning.",tags:["✓ Jeep 4x4 Privat","✓ Driver Berpengalaman","✓ Tiket Masuk Kawasan"]},
@@ -131,46 +129,27 @@ const dataWisata=[
 {title:"Fun Game & Team Building",loc:"📍 Lembang & Bandung",text:"Program kegiatan outbound interaktif yang dirancang khusus untuk mempererat kekompakan tim perusahaan, sekolah, maupun komunitas melalui permainan seru di alam terbuka.",tags:["✓ Instruktur Outbound","✓ Peralatan Permainan Lengkap","✓ Konsep Acara Fleksibel"]},
 {title:"Paket Sewa Mobil & Driver Wisata",loc:"📍 Yogyakarta & Sekitarnya",text:"Layanan transportasi wisata nyaman dengan armada bersih dan terawat, didampingi pengemudi ramah yang menguasai rute wisata lokal untuk memastikan perjalanan Anda tepat waktu dan aman.",tags:["✓ Armada Bersih & Nyaman","✓ Driver Ramah & Berpengalaman","✓ Rute Fleksibel Sesuai Jadwal"]}
 ];
-const items=document.querySelectorAll(".arc-item");
-const dotsContainer=document.getElementById("dotsList");
-const descCard=document.getElementById("descCard");
-const dTitle=document.getElementById("dTitle");
-const dLoc=document.getElementById("dLoc");
-const dText=document.getElementById("dText");
-const dTags=document.getElementById("dTags");
-const total=items.length;
-let current=0;
-items.forEach((_,idx)=>{
-const dot=document.createElement("span");
-dot.className=idx===0?"dot-btn active":"dot-btn";
-dot.addEventListener("click",()=>goTo(idx));
-dotsContainer.appendChild(dot);
-});
+const items=document.querySelectorAll(".arc-item"),dotsBox=document.getElementById("dotsList"),descCard=document.getElementById("descCard"),dTitle=document.getElementById("dTitle"),dLoc=document.getElementById("dLoc"),dText=document.getElementById("dText"),dTags=document.getElementById("dTags"),total=items.length;
+let cur=0;
+items.forEach((_,i)=>{const s=document.createElement("span");s.className=i===0?"dot-btn active":"dot-btn";s.onclick=()=>goTo(i);dotsBox.appendChild(s)});
 const dots=document.querySelectorAll(".dot-btn");
-function render(){
-items.forEach((el,idx)=>{
-const pos=(idx-current+total)%total;
-el.className="arc-item pos-"+pos;
-});
-dots.forEach((d,idx)=>{d.classList.toggle("active",idx===current)});
-const info=dataWisata[current];
+function goTo(n){
+cur=(n+total)%total;
+items.forEach((el,i)=>{el.className="arc-item pos-"+((i-cur+total)%total)});
+dots.forEach((d,i)=>{d.classList.toggle("active",i===cur)});
+const info=dataWisata[cur];
 descCard.style.opacity="0.4";
-setTimeout(()=>{
-dTitle.textContent=info.title;
-dLoc.textContent=info.loc;
-dText.textContent=info.text;
-dTags.innerHTML=info.tags.map(t=><span class="tag-item">${t}</span>).join("");
-descCard.style.opacity="1";
-},140);
+setTimeout(()=>{dTitle.textContent=info.title;dLoc.textContent=info.loc;dText.textContent=info.text;dTags.innerHTML=info.tags.map(t=>`<span class="tag-item">${t}</span>`).join("");descCard.style.opacity="1"},130);
 }
-function goTo(idx){current=(idx+total)%total;render()}
-items.forEach((el,idx)=>{el.addEventListener("click",()=>{if(idx!==current)goTo(idx)})});
-document.getElementById("btnNext").addEventListener("click",()=>goTo(current+1));
-document.getElementById("btnPrev").addEventListener("click",()=>goTo(current-1));
-const stage=document.getElementById("arcStage");
-let startX=0;
-stage.addEventListener("touchstart",e=>{startX=e.touches[0].clientX},{passive:true});
-stage.addEventListener("touchend",e=>{const diff=startX-e.changedTouches[0].clientX;if(Math.abs(diff)>40)goTo(diff>0?current+1:current-1)});
-stage.addEventListener("mousedown",e=>{startX=e.clientX});
-stage.addEventListener("mouseup",e=>{const diff=startX-e.clientX;if(Math.abs(diff)>40)goTo(diff>0?current+1:current-1)});
-});
+items.forEach((el,i)=>{el.onclick=()=>{if(i!==cur)goTo(i)}});
+document.getElementById("btnNext").onclick=()=>goTo(cur+1);
+document.getElementById("btnPrev").onclick=()=>goTo(cur-1);
+let sx=0;const st=document.getElementById("arcStage");
+st.ontouchstart=e=>{sx=e.touches[0].clientX};
+st.ontouchend=e=>{const df=sx-e.changedTouches[0].clientX;if(Math.abs(df)>40)goTo(df>0?cur+1:cur-1)};
+st.onmousedown=e=>{sx=e.clientX};
+st.onmouseup=e=>{const df=sx-e.clientX;if(Math.abs(df)>40)goTo(df>0?cur+1:cur-1)};
+</script>
+</body>
+</html>
+
