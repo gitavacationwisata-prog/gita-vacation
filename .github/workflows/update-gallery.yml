@@ -1,0 +1,39 @@
+name: Update Daftar Foto Galeri
+
+on:
+  push:
+    paths:
+      - 'foto/**'
+      - '!foto/list.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-list:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Generate list.json dari folder foto
+        run: |
+          python3 -c '
+          import os, json
+          valid_ext = (".jpg", ".jpeg", ".png", ".webp", ".gif")
+          files = sorted([
+              f for f in os.listdir("foto")
+              if os.path.isfile(os.path.join("foto", f)) and f.lower().endswith(valid_ext)
+          ])
+          with open("foto/list.json", "w", encoding="utf-8") as fp:
+              json.dump(files, fp, indent=2)
+          '
+
+      - name: Simpan list.json ke repositori
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@://github.com"
+          git add foto/list.json
+          git diff --staged --quiet || git commit -m "Otomatis update daftar foto galeri"
+          git push
