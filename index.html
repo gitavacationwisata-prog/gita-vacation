@@ -317,18 +317,20 @@ st.ontouchend=e=>{const df=sx-e.changedTouches[0].clientX;if(Math.abs(df)>40)goT
 st.onmousedown=e=>{sx=e.clientX};
 st.onmouseup=e=>{const df=sx-e.clientX;if(Math.abs(df)>40)goTo(df>0?cur+1:cur-1)};
 </script>
-  <!-- ==================== MULAI BAGIAN GALERI KEBAHAGIAAN (OTOMATIS) ==================== -->
+  <!-- ==================== MULAI BAGIAN GALERI KEBAHAGIAAN (MARQUEE BERJALAN OTOMATIS) ==================== -->
 <style>
   .happiness-section {
-    padding: 70px 20px;
-    background-color: #f8fbf9;
+    padding: 70px 0;
+    background: linear-gradient(180deg, #ffffff 0%, #f3f9f5 50%, #ffffff 100%);
     font-family: 'Poppins', 'Segoe UI', sans-serif;
     text-align: center;
+    overflow: hidden;
   }
 
   .happiness-header {
-    max-width: 700px;
-    margin: 0 auto 40px auto;
+    max-width: 720px;
+    margin: 0 auto 42px auto;
+    padding: 0 20px;
   }
 
   .happiness-badge {
@@ -357,76 +359,81 @@ st.onmouseup=e=>{const df=sx-e.clientX;if(Math.abs(df)>40)goTo(df>0?cur+1:cur-1)
     margin: 0;
   }
 
-  .happiness-gallery {
-    column-count: 4;
-    column-gap: 16px;
-    max-width: 1200px;
-    margin: 0 auto;
+  /* Wrapper Marquee dengan efek pudar halus di pinggir kiri-kanan */
+  .marquee-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    mask-image: linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%);
   }
 
-  @media (max-width: 992px) {
-    .happiness-gallery { column-count: 3; }
+  .marquee-row {
+    display: flex;
+    width: max-content;
+    gap: 18px;
+  }
+
+  /* Baris 1 jalan ke kiri, Baris 2 jalan ke kanan */
+  .marquee-row.scroll-left {
+    animation: scrollLeft 45s linear infinite;
+  }
+
+  .marquee-row.scroll-right {
+    animation: scrollRight 48s linear infinite;
+  }
+
+  /* Berhenti otomatis saat kursor menyentuh foto */
+  .marquee-wrapper:hover .marquee-row {
+    animation-play-state: paused;
+  }
+
+  @keyframes scrollLeft {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  @keyframes scrollRight {
+    0% { transform: translateX(-50%); }
+    100% { transform: translateX(0); }
+  }
+
+  .marquee-card {
+    width: 280px;
+    height: 200px;
+    flex-shrink: 0;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(27, 59, 43, 0.1);
+    background: #fff;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+  }
+
+  .marquee-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 26px rgba(30, 126, 52, 0.25);
+    z-index: 2;
+  }
+
+  .marquee-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
 
   @media (max-width: 600px) {
-    .happiness-gallery { column-count: 2; column-gap: 10px; }
     .happiness-header h2 { font-size: 24px; }
+    .marquee-card { width: 210px; height: 155px; border-radius: 12px; }
+    .marquee-wrapper { gap: 12px; }
+    .marquee-row { gap: 12px; }
   }
 
-  .gallery-item {
-    break-inside: avoid;
-    margin-bottom: 16px;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    background: #fff;
-    cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  .gallery-item:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 20px rgba(30, 126, 52, 0.18);
-  }
-
-  .gallery-item img {
-    width: 100%;
-    height: auto;
-    display: block;
-    transition: transform 0.4s ease;
-  }
-
-  .gallery-item:hover img {
-    transform: scale(1.04);
-  }
-
-  .gallery-item.hidden-photo {
-    display: none;
-  }
-
-  .load-more-wrap {
-    margin-top: 32px;
-  }
-
-  .btn-load-more {
-    background-color: #1e7e34;
-    color: #ffffff;
-    border: none;
-    padding: 13px 30px;
-    font-size: 15px;
-    font-weight: 600;
-    border-radius: 50px;
-    cursor: pointer;
-    box-shadow: 0 4px 14px rgba(30, 126, 52, 0.25);
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    display: none;
-  }
-
-  .btn-load-more:hover {
-    background-color: #155d27;
-    transform: translateY(-2px);
-  }
-
+  /* Lightbox (Perbesar Foto saat Diklik) */
   .lightbox-modal {
     display: none;
     position: fixed;
@@ -441,7 +448,7 @@ st.onmouseup=e=>{const df=sx-e.clientX;if(Math.abs(df)>40)goTo(df>0?cur+1:cur-1)
   .lightbox-modal img {
     max-width: 92%;
     max-height: 88vh;
-    border-radius: 10px;
+    border-radius: 12px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   }
 
@@ -463,11 +470,9 @@ st.onmouseup=e=>{const df=sx-e.clientX;if(Math.abs(df)>40)goTo(df>0?cur+1:cur-1)
     <p>Ribuan senyum, cerita seru, dan momen tak terlupakan dari para tamu yang telah mempercayakan perjalanan wisatanya bersama Gita Vacation.</p>
   </div>
 
-  <!-- Container akan terisi otomatis dari folder foto/ di GitHub -->
-  <div class="happiness-gallery" id="happinessGallery"></div>
-
-  <div class="load-more-wrap">
-    <button class="btn-load-more" id="btnLoadMore" onclick="showAllPhotos()">Lihat Semua Momen</button>
+  <div class="marquee-wrapper">
+    <div class="marquee-row scroll-left" id="marqueeRow1"></div>
+    <div class="marquee-row scroll-right" id="marqueeRow2"></div>
   </div>
 </section>
 
@@ -480,9 +485,7 @@ st.onmouseup=e=>{const df=sx-e.clientX;if(Math.abs(df)>40)goTo(df>0?cur+1:cur-1)
   const GITHUB_OWNER = 'gitavacationwisata-prog';
   const GITHUB_REPO = 'gita-vacation';
   const FOLDER_PATH = 'foto';
-  const INITIAL_VISIBLE = 8; // Jumlah foto yang langsung tampil sebelum tombol diklik
 
-  // Daftar cadangan jika API GitHub sedang terkena limit akses
   const FALLBACK_FILES = [
     'tamu (1).jpeg', 'tamu (1).jpg', 'tamu (2).jpeg', 'tamu (2).jpg',
     'tamu (3).jpg', 'tamu (4).jpg', 'tamu (5).jpg', 'tamu (6).jpg',
@@ -491,29 +494,33 @@ st.onmouseup=e=>{const df=sx-e.clientX;if(Math.abs(df)>40)goTo(df>0?cur+1:cur-1)
     'tamu (15).jpg', 'tamu (16).jpg', 'tamu (17).jpg', 'tamu (18).jpg'
   ];
 
-  function renderGallery(photoUrls) {
-    const galleryEl = document.getElementById('happinessGallery');
-    const btnMore = document.getElementById('btnLoadMore');
-    galleryEl.innerHTML = '';
+  function populateRow(rowElement, urls) {
+    // Gandakan array foto agar animasi berjalan mulus tanpa putus (seamless loop)
+    const loopUrls = [...urls, ...urls];
+    rowElement.innerHTML = '';
 
-    photoUrls.forEach((url, index) => {
-      const item = document.createElement('div');
-      item.className = 'gallery-item' + (index >= INITIAL_VISIBLE ? ' hidden-photo' : '');
-      item.onclick = () => openLightbox(url);
+    loopUrls.forEach((url, idx) => {
+      const card = document.createElement('div');
+      card.className = 'marquee-card';
+      card.onclick = () => openLightbox(url);
 
       const img = document.createElement('img');
       img.src = url;
-      img.alt = 'Dokumentasi Wisata Gita Vacation ' + (index + 1);
+      img.alt = 'Dokumentasi Gita Vacation ' + (idx + 1);
       img.loading = 'lazy';
 
-      item.appendChild(img);
-      galleryEl.appendChild(item);
+      card.appendChild(img);
+      rowElement.appendChild(card);
     });
+  }
 
-    if (photoUrls.length > INITIAL_VISIBLE) {
-      btnMore.textContent = `Lihat Semua Momen (${photoUrls.length} Foto)`;
-      btnMore.style.display = 'inline-block';
-    }
+  function renderMarqueeGallery(photoUrls) {
+    const mid = Math.ceil(photoUrls.length / 2);
+    const firstHalf = photoUrls.slice(0, mid);
+    const secondHalf = photoUrls.slice(mid);
+
+    populateRow(document.getElementById('marqueeRow1'), firstHalf);
+    populateRow(document.getElementById('marqueeRow2'), secondHalf.length > 0 ? secondHalf : firstHalf);
   }
 
   async function loadAutoGallery() {
@@ -528,19 +535,14 @@ st.onmouseup=e=>{const df=sx-e.clientX;if(Math.abs(df)>40)goTo(df>0?cur+1:cur-1)
         .map(file => `${FOLDER_PATH}/${encodeURIComponent(file.name)}`);
 
       if (imageUrls.length > 0) {
-        renderGallery(imageUrls);
+        renderMarqueeGallery(imageUrls);
       } else {
         throw new Error('Folder kosong');
       }
     } catch (error) {
       const fallbackUrls = FALLBACK_FILES.map(name => `${FOLDER_PATH}/${encodeURIComponent(name)}`);
-      renderGallery(fallbackUrls);
+      renderMarqueeGallery(fallbackUrls);
     }
-  }
-
-  function showAllPhotos() {
-    document.querySelectorAll('.hidden-photo').forEach(item => item.classList.remove('hidden-photo'));
-    document.getElementById('btnLoadMore').style.display = 'none';
   }
 
   function openLightbox(src) {
@@ -554,7 +556,8 @@ st.onmouseup=e=>{const df=sx-e.clientX;if(Math.abs(df)>40)goTo(df>0?cur+1:cur-1)
 
   loadAutoGallery();
 </script>
-<!-- ==================== SELESAI BAGIAN GALERI KEBAHAGIAAN (OTOMATIS) ==================== -->
+<!-- ==================== SELESAI BAGIAN GALERI KEBAHAGIAAN (MARQUEE BERJALAN OTOMATIS) ==================== -->
+
 
 </body>
 </html>
