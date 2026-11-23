@@ -317,6 +317,245 @@ st.ontouchend=e=>{const df=sx-e.changedTouches[0].clientX;if(Math.abs(df)>40)goT
 st.onmousedown=e=>{sx=e.clientX};
 st.onmouseup=e=>{const df=sx-e.clientX;if(Math.abs(df)>40)goTo(df>0?cur+1:cur-1)};
 </script>
+  <!-- ==================== MULAI BAGIAN GALERI KEBAHAGIAAN (OTOMATIS) ==================== -->
+<style>
+  .happiness-section {
+    padding: 70px 20px;
+    background-color: #f8fbf9;
+    font-family: 'Poppins', 'Segoe UI', sans-serif;
+    text-align: center;
+  }
+
+  .happiness-header {
+    max-width: 700px;
+    margin: 0 auto 40px auto;
+  }
+
+  .happiness-badge {
+    display: inline-block;
+    background-color: #e6f4ea;
+    color: #1e7e34;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 6px 16px;
+    border-radius: 50px;
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
+  }
+
+  .happiness-header h2 {
+    font-size: 32px;
+    color: #1b3b2b;
+    margin: 0 0 12px 0;
+    font-weight: 700;
+  }
+
+  .happiness-header p {
+    font-size: 16px;
+    color: #5a6e63;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .happiness-gallery {
+    column-count: 4;
+    column-gap: 16px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 992px) {
+    .happiness-gallery { column-count: 3; }
+  }
+
+  @media (max-width: 600px) {
+    .happiness-gallery { column-count: 2; column-gap: 10px; }
+    .happiness-header h2 { font-size: 24px; }
+  }
+
+  .gallery-item {
+    break-inside: avoid;
+    margin-bottom: 16px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    background: #fff;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .gallery-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(30, 126, 52, 0.18);
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  .gallery-item:hover img {
+    transform: scale(1.04);
+  }
+
+  .gallery-item.hidden-photo {
+    display: none;
+  }
+
+  .load-more-wrap {
+    margin-top: 32px;
+  }
+
+  .btn-load-more {
+    background-color: #1e7e34;
+    color: #ffffff;
+    border: none;
+    padding: 13px 30px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(30, 126, 52, 0.25);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: none;
+  }
+
+  .btn-load-more:hover {
+    background-color: #155d27;
+    transform: translateY(-2px);
+  }
+
+  .lightbox-modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.88);
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+
+  .lightbox-modal img {
+    max-width: 92%;
+    max-height: 88vh;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: #fff;
+    font-size: 38px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+</style>
+
+<section class="happiness-section" id="galeri-tamu">
+  <div class="happiness-header">
+    <span class="happiness-badge">📸 GALERI PERJALANAN</span>
+    <h2>The People Who Shared Their Happiness With Us</h2>
+    <p>Ribuan senyum, cerita seru, dan momen tak terlupakan dari para tamu yang telah mempercayakan perjalanan wisatanya bersama Gita Vacation.</p>
+  </div>
+
+  <!-- Container akan terisi otomatis dari folder foto/ di GitHub -->
+  <div class="happiness-gallery" id="happinessGallery"></div>
+
+  <div class="load-more-wrap">
+    <button class="btn-load-more" id="btnLoadMore" onclick="showAllPhotos()">Lihat Semua Momen</button>
+  </div>
+</section>
+
+<div class="lightbox-modal" id="lightboxModal" onclick="closeLightbox()">
+  <span class="lightbox-close">&times;</span>
+  <img id="lightboxImg" src="" alt="Preview Foto">
+</div>
+
+<script>
+  const GITHUB_OWNER = 'gitavacationwisata-prog';
+  const GITHUB_REPO = 'gita-vacation';
+  const FOLDER_PATH = 'foto';
+  const INITIAL_VISIBLE = 8; // Jumlah foto yang langsung tampil sebelum tombol diklik
+
+  // Daftar cadangan jika API GitHub sedang terkena limit akses
+  const FALLBACK_FILES = [
+    'tamu (1).jpeg', 'tamu (1).jpg', 'tamu (2).jpeg', 'tamu (2).jpg',
+    'tamu (3).jpg', 'tamu (4).jpg', 'tamu (5).jpg', 'tamu (6).jpg',
+    'tamu (7).jpg', 'tamu (8).JPG', 'tamu (9).jpg', 'tamu (10).JPG',
+    'tamu (11).JPG', 'tamu (12).JPG', 'tamu (13).JPG', 'tamu (14).jpg',
+    'tamu (15).jpg', 'tamu (16).jpg', 'tamu (17).jpg', 'tamu (18).jpg'
+  ];
+
+  function renderGallery(photoUrls) {
+    const galleryEl = document.getElementById('happinessGallery');
+    const btnMore = document.getElementById('btnLoadMore');
+    galleryEl.innerHTML = '';
+
+    photoUrls.forEach((url, index) => {
+      const item = document.createElement('div');
+      item.className = 'gallery-item' + (index >= INITIAL_VISIBLE ? ' hidden-photo' : '');
+      item.onclick = () => openLightbox(url);
+
+      const img = document.createElement('img');
+      img.src = url;
+      img.alt = 'Dokumentasi Wisata Gita Vacation ' + (index + 1);
+      img.loading = 'lazy';
+
+      item.appendChild(img);
+      galleryEl.appendChild(item);
+    });
+
+    if (photoUrls.length > INITIAL_VISIBLE) {
+      btnMore.textContent = `Lihat Semua Momen (${photoUrls.length} Foto)`;
+      btnMore.style.display = 'inline-block';
+    }
+  }
+
+  async function loadAutoGallery() {
+    try {
+      const apiUrl = `https://github.com{GITHUB_OWNER}/${GITHUB_REPO}/contents/${FOLDER_PATH}`;
+      const response = await fetch(apiUrl);
+      if (!response.ok) throw new Error('GitHub API limit');
+
+      const files = await response.json();
+      const imageUrls = files
+        .filter(file => file.type === 'file' && /\.(jpe?g|png|webp|gif)$/i.test(file.name))
+        .map(file => `${FOLDER_PATH}/${encodeURIComponent(file.name)}`);
+
+      if (imageUrls.length > 0) {
+        renderGallery(imageUrls);
+      } else {
+        throw new Error('Folder kosong');
+      }
+    } catch (error) {
+      const fallbackUrls = FALLBACK_FILES.map(name => `${FOLDER_PATH}/${encodeURIComponent(name)}`);
+      renderGallery(fallbackUrls);
+    }
+  }
+
+  function showAllPhotos() {
+    document.querySelectorAll('.hidden-photo').forEach(item => item.classList.remove('hidden-photo'));
+    document.getElementById('btnLoadMore').style.display = 'none';
+  }
+
+  function openLightbox(src) {
+    document.getElementById('lightboxImg').src = src;
+    document.getElementById('lightboxModal').style.display = 'flex';
+  }
+
+  function closeLightbox() {
+    document.getElementById('lightboxModal').style.display = 'none';
+  }
+
+  loadAutoGallery();
+</script>
+<!-- ==================== SELESAI BAGIAN GALERI KEBAHAGIAAN (OTOMATIS) ==================== -->
+
 </body>
 </html>
 
