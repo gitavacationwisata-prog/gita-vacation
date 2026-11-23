@@ -475,27 +475,25 @@ footer strong{color:#fff}
     populateRow(document.getElementById('marqueeRow2'), secondHalf.length > 0 ? secondHalf : firstHalf);
   }
 
-  async function loadAutoGallery() {
+   async function loadAutoGallery() {
     try {
-      const apiUrl = `https://github.com{GITHUB_OWNER}/${GITHUB_REPO}/contents/${FOLDER_PATH}`;
-      const response = await fetch(apiUrl);
-      if (!response.ok) throw new Error('GitHub API limit');
+      const response = await fetch('foto/list.json?v=' + Date.now());
+      if (!response.ok) throw new Error('list.json belum siap');
 
       const files = await response.json();
-      const imageUrls = files
-        .filter(file => file.type === 'file' && /\.(jpe?g|png|webp|gif)$/i.test(file.name))
-        .map(file => `${FOLDER_PATH}/${encodeURIComponent(file.name)}`);
+      const imageUrls = files.map(name => `${FOLDER_PATH}/${encodeURIComponent(name)}`);
 
       if (imageUrls.length > 0) {
         renderMarqueeGallery(imageUrls);
       } else {
-        throw new Error('Folder kosong');
+        throw new Error('Daftar kosong');
       }
     } catch (error) {
       const fallbackUrls = FALLBACK_FILES.map(name => `${FOLDER_PATH}/${encodeURIComponent(name)}`);
       renderMarqueeGallery(fallbackUrls);
     }
   }
+
 
   function openLightbox(src) {
     document.getElementById('lightboxImg').src = src;
